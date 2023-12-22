@@ -124,6 +124,7 @@ radius = 41.0
 height = 186.0
 
 [node name="Player" type="Area2D"]
+scale = Vector2(0.775, 0.775)
 script = ExtResource("1_yuqqj")
 speed = 270
 metadata/_edit_group_ = true
