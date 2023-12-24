@@ -3,6 +3,7 @@ extends Area2D
 signal hit
 
 @export var speed = 300 # How fast the player will move (pixels/sec).
+var speed_mult = 1.0;
 var screen_size # Size of the game window.
 
 # Called when the node enters the scene tree for the first time.
@@ -29,7 +30,7 @@ func _process(delta):
 
 	$AnimatedSprite2D.play()
 	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
+		velocity = velocity.normalized() * speed * speed_mult
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 	if velocity.x != 0:
@@ -47,3 +48,10 @@ func _on_body_entered(body):
 	hit.emit()
 	# Must be deferred as we can't change physics properties on a physics callback.
 	$CollisionShape2D.set_deferred("disabled", true)
+
+func set_timed_speed_mult(speed_mult, duration):
+	self.speed_mult = speed_mult
+	await get_tree().create_timer(duration).timeout
+	self.speed_mult = 1.0
+
+

@@ -1,6 +1,7 @@
 extends Node
 
 @export var mob_scene: PackedScene
+@export var speed_boost_scene: PackedScene
 var score
 
 # Called when the node enters the scene tree for the first time.
@@ -16,6 +17,7 @@ func _process(delta):
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$PowerupTimer.stop()
 	$HUD.show_game_over()
 
 func new_game():
@@ -50,6 +52,7 @@ func _on_mob_timer_timeout():
 
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)
+	
 
 func _on_score_timer_timeout():
 	score += 1
@@ -58,3 +61,8 @@ func _on_score_timer_timeout():
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	$PowerupTimer.start()
+
+func _on_powerup_timer_timeout():
+	var speed_boost = speed_boost_scene.instantiate()
+	add_child(speed_boost)
