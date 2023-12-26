@@ -42,7 +42,6 @@ func _process(delta):
 		$AnimatedSprite2D.flip_v = velocity.y > 0
 	else: $AnimatedSprite2D.animation = "idle"
 
-
 func _on_body_entered(body):
 	hide() # Player disappears after being hit.
 	hit.emit()
@@ -53,5 +52,3 @@ func set_timed_speed_mult(speed_mult, duration):
 	self.speed_mult = speed_mult
 	await get_tree().create_timer(duration).timeout
 	self.speed_mult = 1.0
-
-
