@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi7j87ct67qu2"
-path="res://.godot/imported/2d_lights_and_shadows_neutral_po.png-7650dd6410e2b55103da83ac7ed8bc20.ctex"
+uid="uid://cwx4alw8dkn0q"
+path="res://.godot/imported/sword-outline.png-49ad14df6310a63edebc0f9137b328ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/2d_lights_and_shadows_neutral_po.png"
-dest_files=["res://.godot/imported/2d_lights_and_shadows_neutral_po.png-7650dd6410e2b55103da83ac7ed8bc20.ctex"]
+source_file="res://assets/image/sword-outline.png"
+dest_files=["res://.godot/imported/sword-outline.png-49ad14df6310a63edebc0f9137b328ab.ctex"]
 
 [params]
 

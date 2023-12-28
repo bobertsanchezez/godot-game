@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://ypqph15nl1dq"]
+
+[ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="1_r1oxu"]
+[ext_resource type="Texture2D" uid="uid://b3ukxkd1r67fu" path="res://assets/image/sword.png" id="2_267wa"]
+[ext_resource type="Texture2D" uid="uid://cwx4alw8dkn0q" path="res://assets/image/sword-outline.png" id="3_4p8v8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_imtpi"]
+friction = 0.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_24kn8"]
+polygon = PackedVector2Array(7, 31, 7, -30, -7, -30, -7, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2id5u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_267wa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4p8v8")
+}],
+"loop": true,
+"name": &"outline",
+"speed": 5.0
+}]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ahjv0"]
+polygon = PackedVector2Array(0, -30, -1, -30, -1, -29, -2, -29, -2, -25, -3, -25, -3, -21, -4, -21, -4, 12, -7, 12, -7, 15, -6, 15, -6, 16, -5, 16, -5, 17, -4, 17, -4, 18, -3, 18, -3, 19, -3, 29, -4, 29, -4, 30, -5, 30, -5, 31, 5, 31, 5, 30, 4, 30, 4, 29, 3, 29, 3, 19, 3, 18, 4, 18, 4, 17, 5, 17, 5, 16, 6, 16, 6, 15, 7, 15, 7, 12, 4, 12, 4, -21, 3, -21, 3, -25, 2, -25, 2, -29, 1, -29, 1, -30)
+
+[node name="Sword" type="RigidBody2D"]
+position = Vector2(0, -7)
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_imtpi")
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, 7)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -30, 0, -30, -7, -30, -7, -30, -7, 12, -7, 12, -7, 31, 7, 31, 7, 12, 7, 12, 7, -30, 7, -30, 0, -30)
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
+visible = false
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_24kn8")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource("1_r1oxu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Smoothing2D"]
+light_mask = 2
+sprite_frames = SubResource("SpriteFrames_2id5u")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Smoothing2D/AnimatedSprite2D"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_ahjv0")
