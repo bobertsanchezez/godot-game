@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://doatuupeb43qu"]
+
+[sub_resource type="Gradient" id="Gradient_85wm1"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_elll5"]
+gradient = SubResource("Gradient_85wm1")
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_g57uk"]
+offsets = PackedFloat32Array(0, 0.715909, 1)
+colors = PackedColorArray(0.454902, 0.227451, 0, 1, 0.454902, 0.227451, 0, 1, 0, 0.705863, 2.11775e-06, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0kt8c"]
+gradient = SubResource("Gradient_g57uk")
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_t3cdy"]
+offsets = PackedFloat32Array(0, 0.602273, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 0.858824, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u8iok"]
+gradient = SubResource("Gradient_t3cdy")
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_771oc"]
+offsets = PackedFloat32Array(0, 0.75, 1)
+colors = PackedColorArray(0, 0.227451, 1, 1, 0, 0.227451, 1, 1, 0.278431, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ob3l7"]
+gradient = SubResource("Gradient_771oc")
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_wk1xl"]
+offsets = PackedFloat32Array(0, 0.511364, 1)
+colors = PackedColorArray(7.12335e-06, 0.990746, 0.994391, 1, 7.12335e-06, 0.990746, 0.994391, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y17eu"]
+gradient = SubResource("Gradient_wk1xl")
+height = 16
+
+[node name="HUD" type="CanvasLayer" groups=["hud"]]
+
+[node name="EarthResourceBar" type="TextureProgressBar" parent="."]
+offset_left = 568.0
+offset_top = 52.0
+offset_right = 632.0
+offset_bottom = 68.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_elll5")
+texture_progress = SubResource("GradientTexture2D_0kt8c")
+
+[node name="FireResourceBar" type="TextureProgressBar" parent="."]
+offset_left = 568.0
+offset_top = 20.0
+offset_right = 632.0
+offset_bottom = 36.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_elll5")
+texture_progress = SubResource("GradientTexture2D_u8iok")
+
+[node name="WaterResourceBar" type="TextureProgressBar" parent="."]
+offset_left = 568.0
+offset_top = 36.0
+offset_right = 632.0
+offset_bottom = 52.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_elll5")
+texture_progress = SubResource("GradientTexture2D_ob3l7")
+
+[node name="AirResourceBar" type="TextureProgressBar" parent="."]
+offset_left = 568.0
+offset_top = 68.0
+offset_right = 632.0
+offset_bottom = 84.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_elll5")
+texture_progress = SubResource("GradientTexture2D_y17eu")
