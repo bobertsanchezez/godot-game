@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh2qw3crbff5d"]
+
+[ext_resource type="Texture2D" uid="uid://cisnvnu0fgb45" path="res://icon.svg" id="1_4db7s"]
+[ext_resource type="Script" path="res://scenes/debug/test_char.gd" id="1_glbpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wefs3"]
+size = Vector2(127, 127)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_glbpo")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(120.703, 109.805)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(161, 109)
+node_a = NodePath("../StaticBody2D")
+angular_limit_enabled = true
+angular_limit_upper = 1.5708
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+mass = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(290, 107)
+texture = ExtResource("1_4db7s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(289.5, 107.5)
+shape = SubResource("RectangleShape2D_wefs3")

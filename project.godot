@@ -76,10 +76,13 @@ toggle_menu={
 
 [physics]
 
-common/physics_ticks_per_second=30
+2d/default_linear_damp=0.0
+2d/default_angular_damp=0.0
+common/default_linear_damp=0.0
+common/default_angular_damp=0.0
+common/rendering_method="forward_plus"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

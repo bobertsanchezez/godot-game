@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://rkcu6rkqc1np"]
+[gd_scene load_steps=27 format=3 uid="uid://rkcu6rkqc1np"]
 
 [ext_resource type="Texture2D" uid="uid://c1kepri7wrecm" path="res://assets/image/Character_Sprite_Sheet.png" id="1_fbdyj"]
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_l0660"]
@@ -14,8 +14,6 @@ size = Vector2(19, 36)
 gradient = SubResource("Gradient_b2in1")
 width = 24
 height = 4
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wk02"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3qyum"]
 atlas = ExtResource("1_fbdyj")
@@ -169,6 +167,8 @@ polygon = PackedVector2Array(-4, -12, -3, 2, -8, 2, -8, 5, -3, 7, -2, 15, 0, 15,
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_l0660")
+elemental_resources = null
+elemental_resource_maxes = null
 shard_scene = ExtResource("2_qvksl")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -176,26 +176,10 @@ shape = SubResource("RectangleShape2D_nxvgl")
 
 [node name="Smoothing2D" type="Node2D" parent="."]
 script = ExtResource("2_jdfx5")
-target = NodePath("..")
 
 [node name="Hand" type="Sprite2D" parent="Smoothing2D"]
 texture = SubResource("GradientTexture2D_wfbyd")
 offset = Vector2(12, 0)
-
-[node name="ShardPosition" type="Marker2D" parent="Smoothing2D/Hand"]
-position = Vector2(40, 0)
-
-[node name="ShardHolderPin" type="PinJoint2D" parent="Smoothing2D/Hand/ShardPosition"]
-node_b = NodePath("../ShardHolder")
-angular_limit_lower = 0.0872665
-angular_limit_upper = -0.0872665
-
-[node name="ShardHolder" type="StaticBody2D" parent="Smoothing2D/Hand/ShardPosition"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Smoothing2D/Hand/ShardPosition/ShardHolder"]
-shape = SubResource("RectangleShape2D_2wk02")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Smoothing2D"]
 light_mask = 2
@@ -228,5 +212,3 @@ editor_draw_drag_margin = true
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
-
-[node name="Shards" type="Node" parent="."]

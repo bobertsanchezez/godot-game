@@ -11,6 +11,5 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_y74sh")]
 position = Vector2(576, 628)
-metadata/_edit_group_ = true
 
 [node name="HUD" parent="." instance=ExtResource("4_05p23")]

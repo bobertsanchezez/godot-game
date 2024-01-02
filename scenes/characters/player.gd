@@ -2,14 +2,12 @@ extends CharacterBody2D
 
 class_name Player
 
-signal attack_released(charge_time)
-signal attack_canceled
-
 # Enum for elemental resources
 enum Element { NONE, FIRE, WATER, EARTH, AIR }
 
 const BASE_SPEED := 200.0
 const JUMP_VELOCITY := -400.0
+const SHARD_SPAWN_CHARGE = 0.5 # Shard spawns after 0.5 seconds of charging
 
 # Elemental resource variables
 @export var elemental_resources := {
@@ -18,7 +16,6 @@ const JUMP_VELOCITY := -400.0
 	Element.EARTH: 100.0,
 	Element.AIR: 100.0
 }
-
 # Elemental resource maximum variables
 @export var elemental_resource_maxes := {
 	Element.FIRE: 100.0,
@@ -26,6 +23,7 @@ const JUMP_VELOCITY := -400.0
 	Element.EARTH: 100.0,
 	Element.AIR: 100.0
 }
+@export var shard_scene : PackedScene
 
 var speed_modifier := 1.0
 var speed : float:
@@ -34,11 +32,15 @@ var speed : float:
 var active_element : Element = Element.NONE
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+# Current shard being charged in an attack.
+var shard : Shard
 
 var _charging := false # Is the player currently charging an attack?
+var _holding_shard := false # Is the player currently holding a shard (during an attack)?
 
 @onready var hud : CanvasLayer = get_tree().get_first_node_in_group("hud")
 @onready var attack_timer : Timer = $AttackTimer
+@onready var shard_pin : PinJoint2D = $Smoothing2D/Hand/ShardPosition/ShardHolderPin
 
 func _ready():
 	_update_hud() # Ensure HUD reflects initial resource values
@@ -47,20 +49,51 @@ func _process(delta):
 	_drain_resources(delta)
 	_cycle_active_element_on_input()
 	_attack_on_input()
+	_rotate_hand_towards_mouse(delta)
 
 #region User input actions.
+func _rotate_hand_towards_mouse(delta : float):
+	var hand : Sprite2D = $Smoothing2D/Hand
+	var rotation_weight := 10.0
+	var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + PI / 2
+	hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
+
 func _attack_on_input():
+	# Set attack timer and booleans_
+	# Time elapsed on attack timer (0 if stopped)
+	var time_elapsed = fmod(attack_timer.wait_time - attack_timer.time_left, attack_timer.wait_time)
 	if Input.is_action_just_pressed("attack"):
 		attack_timer.start()
 		_charging = true
 	elif Input.is_action_just_released("attack"): 
-		attack_released.emit(attack_timer.wait_time - attack_timer.time_left) # Include time elapsed
 		attack_timer.stop()
+		if shard: shard.on_release(time_elapsed)
+		shard = null
+		shard_pin.node_a = ""
 		_charging = false
+		_holding_shard = false
 	elif Input.is_action_just_pressed("absorb") and _charging:
-		attack_canceled.emit() 
 		attack_timer.stop()
+		if shard: shard.on_cancel()
+		shard_pin.node_a = ""
+		shard = null
+		
 		_charging = false
+		_holding_shard = false
+	if not _holding_shard and _charging and time_elapsed >= SHARD_SPAWN_CHARGE:
+		_spawn_shard() 
+		_holding_shard = true
+
+func _spawn_shard():
+	var new_shard : Shard = shard_scene.instantiate()
+	new_shard.setup(active_element)
+	$Shards.add_child(new_shard) # Transform becomes global here (child of Node)
+	new_shard.position = $Smoothing2D/Hand/ShardPosition.global_position 
+	new_shard.rotation = $Smoothing2D/Hand/ShardPosition.global_rotation
+	self.shard = new_shard 
+	#await get_tree().create_timer(0.05).timeout
+	if shard: 
+		shard_pin.node_a = new_shard.get_path()
 
 func _cycle_active_element_on_input():
 	if Input.is_action_just_pressed("cycle_element_once"):
