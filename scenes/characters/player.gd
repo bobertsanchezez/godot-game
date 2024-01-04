@@ -36,11 +36,13 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var shard : Shard
 
 var _charging := false # Is the player currently charging an attack?
+var _absorbing := false # Is the player currently absorbing resources?
 var _holding_shard := false # Is the player currently holding a shard (during an attack)?
 
 @onready var hud : CanvasLayer = get_tree().get_first_node_in_group("hud")
 @onready var attack_timer : Timer = $AttackTimer
 @onready var shard_pin : PinJoint2D = $Smoothing2D/Hand/ShardPosition/ShardHolderPin
+@onready var attractor_field : AttractorField = $Smoothing2D/Hand/AttractionField
 
 func _ready():
 	_update_hud() # Ensure HUD reflects initial resource values
@@ -50,13 +52,20 @@ func _process(delta):
 	_cycle_active_element_on_input()
 	_attack_on_input()
 	_rotate_hand_towards_mouse(delta)
+	_absorb_on_input()
 
 #region User input actions.
 func _rotate_hand_towards_mouse(delta : float):
 	var hand : Sprite2D = $Smoothing2D/Hand
-	var rotation_weight := 10.0
-	var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + PI / 2
-	hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
+	if _charging or _absorbing:
+		hand.visible = true
+		var rotation_weight := 5.0 if _charging else 10.0
+		var rotation_offset := PI / 2 if _charging else 0.0
+		var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + rotation_offset
+		hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
+	else:
+		# hide hand
+		hand.visible = false
 
 func _attack_on_input():
 	# Set attack timer and booleans_
@@ -77,12 +86,23 @@ func _attack_on_input():
 		if shard: shard.on_cancel()
 		shard_pin.node_a = ""
 		shard = null
-		
 		_charging = false
 		_holding_shard = false
 	if not _holding_shard and _charging and time_elapsed >= SHARD_SPAWN_CHARGE:
 		_spawn_shard() 
 		_holding_shard = true
+
+func _absorb_on_input():
+	if Input.is_action_just_pressed("absorb"):
+		_absorbing = true
+		attractor_field.scale = Vector2(1.0, 1.0)
+		#attractor_field.process_mode = Node.PROCESS_MODE_INHERIT
+		#attractor_field.monitoring = true
+	elif Input.is_action_just_released("absorb"):
+		_absorbing = false
+		attractor_field.scale = Vector2()
+		#attractor_field.process_mode = Node.PROCESS_MODE_DISABLED
+		#attractor_field.monitoring = false
 
 func _spawn_shard():
 	var new_shard : Shard = shard_scene.instantiate()
@@ -142,7 +162,7 @@ func _update_hud():
 		if hud:
 			var elementName = get_element_name_from_value(element)
 			if elementName != "":
-				var progressBar : TextureProgressBar = hud.get_node(elementName + "ResourceBar")
+				var progressBar : TextureProgressBar = hud.get_node("ResourceBars/" + elementName + "ResourceBar")
 				if progressBar:
 					progressBar.value = elemental_resources[element]
 					progressBar.max_value = elemental_resource_maxes[element]
@@ -165,7 +185,6 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed * delta * 10)
 
 	move_and_slide()
-	set_animation()
 
 func set_animation():
 	$Smoothing2D/AnimatedSprite2D.play()

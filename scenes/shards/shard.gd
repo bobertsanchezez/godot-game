@@ -2,12 +2,16 @@ extends RigidBody2D
 
 class_name Shard
 
+# Enum for elemental resources
+enum Element { NONE, FIRE, WATER, EARTH, AIR }
+
 @export var fire_shard_sprite : Texture2D
 @export var water_shard_sprite : Texture2D
 @export var earth_shard_sprite : Texture2D
 @export var air_shard_sprite : Texture2D
 
 var thrown := false
+var airborne := true # False once this shard collides with something
 var reset_transform : Transform2D
 var elemental_type : Player.Element = Player.Element.NONE
 
@@ -30,7 +34,7 @@ func _integrate_forces(state):
 		var rotation_weight := .1
 		var target_angle = position.angle_to_point(get_global_mouse_position())
 		state.transform = Transform2D(lerp_angle(rotation, target_angle, rotation_weight), position)
-	else:
+	elif airborne:
 		var rotation_weight := .04
 		var target_angle = linear_velocity.angle()
 		state.transform = Transform2D(lerp_angle(rotation, target_angle, rotation_weight), position)
@@ -48,6 +52,7 @@ func on_cancel():
 	queue_free()
 
 func _on_body_entered(body):
+	if thrown: airborne = false
 	pass
 	#queue_free()
 

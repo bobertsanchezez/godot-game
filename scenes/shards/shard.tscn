@@ -41,8 +41,9 @@ curve = SubResource("Curve_un0q2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w7xkp"]
 particle_flag_disable_z = true
-emission_shape = 4
-emission_point_count = 1
+emission_shape_scale = Vector3(32, 6, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
 inherit_velocity_ratio = 0.05
 orbit_velocity_curve = SubResource("CurveTexture_hwk4u")
 gravity = Vector3(0, -98, 0)
@@ -55,9 +56,12 @@ turbulence_noise_strength = 0.0
 turbulence_noise_scale = 0.0
 
 [node name="Shard" type="RigidBody2D"]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 6
+collision_mask = 6
 gravity_scale = 0.3
+can_sleep = false
+max_contacts_reported = 3
+contact_monitor = true
 angular_damp = 2.806
 script = ExtResource("1_lyirh")
 fire_shard_sprite = ExtResource("2_mk66l")

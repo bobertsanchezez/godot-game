@@ -1,12 +1,20 @@
-[gd_scene load_steps=28 format=3 uid="uid://rkcu6rkqc1np"]
+[gd_scene load_steps=11 format=3 uid="uid://rkcu6rkqc1np"]
 
-[ext_resource type="Texture2D" uid="uid://c1kepri7wrecm" path="res://assets/image/Character_Sprite_Sheet.png" id="1_fbdyj"]
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_l0660"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="2_jdfx5"]
 [ext_resource type="PackedScene" uid="uid://4735ce8v1nmj" path="res://scenes/shards/shard.tscn" id="2_qvksl"]
+[ext_resource type="PackedScene" uid="uid://dq81g8d2ygyw1" path="res://scenes/attractor/attraction_field.tscn" id="4_6a4nm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxvgl"]
 size = Vector2(19, 36)
+
+[sub_resource type="Gradient" id="Gradient_3aaaw"]
+colors = PackedColorArray(0.470076, 0.470076, 0.470076, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1yas5"]
+gradient = SubResource("Gradient_3aaaw")
+fill_from = Vector2(0.525641, 1)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="Gradient" id="Gradient_b2in1"]
 
@@ -16,156 +24,6 @@ width = 24
 height = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2wk02"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3qyum"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1322, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ktcpt"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1402, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pf51q"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1482, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bc2hs"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1562, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x3tqq"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1642, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3eje"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1802, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kfx84"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(42, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_732q4"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(122, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cay5r"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1722, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1woll"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(682, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_848gh"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(762, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v0i1x"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(842, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qdoyt"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(922, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qhrvk"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1002, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t86yd"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1082, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r5kjk"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1162, 0, 64, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gcc4u"]
-atlas = ExtResource("1_fbdyj")
-region = Rect2(1242, 0, 64, 52)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_q6xex"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3qyum")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ktcpt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pf51q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bc2hs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x3tqq")
-}],
-"loop": true,
-"name": &"death",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y3eje")
-}],
-"loop": true,
-"name": &"fall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kfx84")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_732q4")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 2.5
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cay5r")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1woll")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_848gh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v0i1x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qdoyt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qhrvk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t86yd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r5kjk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gcc4u")
-}],
-"loop": true,
-"name": &"run",
-"speed": 12.0
-}]
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uaa1c"]
-polygon = PackedVector2Array(-4, -12, -3, 2, -8, 2, -8, 5, -3, 7, -2, 15, 0, 15, 0, 5, 5, 5, 5, 3, 0, 2, -1, -12)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_l0660")
@@ -177,6 +35,11 @@ shape = SubResource("RectangleShape2D_nxvgl")
 [node name="Smoothing2D" type="Node2D" parent="."]
 script = ExtResource("2_jdfx5")
 target = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+position = Vector2(-9.53674e-07, -9.53674e-07)
+scale = Vector2(0.3125, 0.5625)
+texture = SubResource("GradientTexture2D_1yas5")
 
 [node name="Hand" type="Sprite2D" parent="Smoothing2D"]
 texture = SubResource("GradientTexture2D_wfbyd")
@@ -197,16 +60,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Smoothing2D/Hand/ShardPosition/ShardHolder"]
 shape = SubResource("RectangleShape2D_2wk02")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Smoothing2D"]
-light_mask = 2
-texture_filter = 1
-position = Vector2(1, -4)
-sprite_frames = SubResource("SpriteFrames_q6xex")
-animation = &"idle"
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Smoothing2D/AnimatedSprite2D"]
-show_behind_parent = true
-occluder = SubResource("OccluderPolygon2D_uaa1c")
+[node name="AttractionField" parent="Smoothing2D/Hand" instance=ExtResource("4_6a4nm")]
 
 [node name="Camera" type="Camera2D" parent="Smoothing2D"]
 position = Vector2(-6, 2)
