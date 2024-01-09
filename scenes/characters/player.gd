@@ -51,21 +51,22 @@ func _process(delta):
 	_drain_resources(delta)
 	_cycle_active_element_on_input()
 	_attack_on_input()
-	_rotate_hand_towards_mouse(delta)
 	_absorb_on_input()
-
+	_rotate_hand_towards_mouse(delta)
 #region User input actions.
 func _rotate_hand_towards_mouse(delta : float):
 	var hand : Sprite2D = $Smoothing2D/Hand
 	if _charging or _absorbing:
 		hand.visible = true
-		var rotation_weight := 5.0 if _charging else 10.0
-		var rotation_offset := PI / 2 if _charging else 0.0
-		var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + rotation_offset
-		hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
+
 	else:
 		# hide hand
 		hand.visible = false
+		pass
+	var rotation_weight := 5.0 if _charging else 10.0
+	var rotation_offset := PI / 2 if _charging else 0.0
+	var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + rotation_offset
+	hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
 
 func _attack_on_input():
 	# Set attack timer and booleans_
@@ -95,14 +96,13 @@ func _attack_on_input():
 func _absorb_on_input():
 	if Input.is_action_just_pressed("absorb"):
 		_absorbing = true
-		attractor_field.scale = Vector2(1.0, 1.0)
-		#attractor_field.process_mode = Node.PROCESS_MODE_INHERIT
-		#attractor_field.monitoring = true
+		#attractor_field.gravity_space_override = Area2D.SPACE_OVERRIDE_REPLACE
+		attractor_field.enable_collision()
 	elif Input.is_action_just_released("absorb"):
 		_absorbing = false
-		attractor_field.scale = Vector2()
-		#attractor_field.process_mode = Node.PROCESS_MODE_DISABLED
-		#attractor_field.monitoring = false
+		#attractor_field.gravity_space_override = Area2D.SPACE_OVERRIDE_DISABLED
+		attractor_field.disable_collision()
+		
 
 func _spawn_shard():
 	var new_shard : Shard = shard_scene.instantiate()
@@ -185,8 +185,10 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed * delta * 10)
 
 	move_and_slide()
+	set_animation()
 
 func set_animation():
+	
 	$Smoothing2D/AnimatedSprite2D.play()
 	if velocity.x != 0:
 		$Smoothing2D/AnimatedSprite2D.flip_h = velocity.x < 0
@@ -196,6 +198,6 @@ func set_animation():
 			$Smoothing2D/AnimatedSprite2D.flip_v = false
 		else: $Smoothing2D/AnimatedSprite2D.animation = "idle"
 	elif velocity.y < 0:
-		$Smoothing2D/AnimatedSprite2D.animation = "jump"
+		$Smoothing2D/AnimatedSprite2D.animation = "liftoff"
 	else: 
-		$Smoothing2D/AnimatedSprite2D.animation = "fall" 
+		$Smoothing2D/AnimatedSprite2D.animation = "float" 

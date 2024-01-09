@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=3 uid="uid://rkcu6rkqc1np"]
+
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_l0660"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="2_jdfx5"]
+[ext_resource type="PackedScene" uid="uid://4735ce8v1nmj" path="res://scenes/shards/shard.tscn" id="2_qvksl"]
+[ext_resource type="PackedScene" uid="uid://dq81g8d2ygyw1" path="res://scenes/attractor/attraction_field.tscn" id="4_6a4nm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxvgl"]
+size = Vector2(19, 36)
+
+[sub_resource type="Gradient" id="Gradient_3aaaw"]
+colors = PackedColorArray(0.470076, 0.470076, 0.470076, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1yas5"]
+gradient = SubResource("Gradient_3aaaw")
+fill_from = Vector2(0.525641, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_b2in1"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfbyd"]
+gradient = SubResource("Gradient_b2in1")
+width = 24
+height = 4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wk02"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_l0660")
+elemental_resources = null
+elemental_resource_maxes = null
+shard_scene = ExtResource("2_qvksl")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nxvgl")
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource("2_jdfx5")
+target = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+position = Vector2(-9.53674e-07, -9.53674e-07)
+scale = Vector2(0.3125, 0.5625)
+texture = SubResource("GradientTexture2D_1yas5")
+
+[node name="Hand" type="Sprite2D" parent="Smoothing2D"]
+texture = SubResource("GradientTexture2D_wfbyd")
+offset = Vector2(12, 0)
+
+[node name="ShardPosition" type="Marker2D" parent="Smoothing2D/Hand"]
+position = Vector2(40, 0)
+
+[node name="ShardHolderPin" type="PinJoint2D" parent="Smoothing2D/Hand/ShardPosition"]
+node_b = NodePath("../ShardHolder")
+angular_limit_lower = 0.0872665
+angular_limit_upper = -0.0872665
+
+[node name="ShardHolder" type="StaticBody2D" parent="Smoothing2D/Hand/ShardPosition"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Smoothing2D/Hand/ShardPosition/ShardHolder"]
+shape = SubResource("RectangleShape2D_2wk02")
+
+[node name="AttractionField" parent="Smoothing2D/Hand" instance=ExtResource("4_6a4nm")]
+
+[node name="Camera" type="Camera2D" parent="Smoothing2D"]
+position = Vector2(-6, 2)
+zoom = Vector2(2.5, 2.5)
+limit_left = 0
+limit_top = 0
+limit_right = 1200
+limit_bottom = 672
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_right_margin = 0.1
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Shards" type="Node" parent="."]

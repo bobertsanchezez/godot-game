@@ -5,6 +5,7 @@ class_name AttractorField
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	disable_collision()
 	pass # Replace with function body.
 
 
@@ -20,3 +21,14 @@ func _on_body_entered(body):
 
 func _on_body_exited(body):
 	pass # Replace with function body.
+
+func disable_collision():
+	collision_mask = 0
+	set_deferred("disabled", true)
+	#$CollisionPolygon2D.set_deferred("disabled", true)
+	pass
+func enable_collision():
+	collision_mask = 4
+	set_deferred("disabled", false)
+	#$CollisionPolygon2D.set_deferred("disabled", false)
+	pass

@@ -81,7 +81,9 @@ texture = ExtResource("1_smbfq")
 
 [node name="ShadowLight" type="PointLight2D" parent="."]
 position = Vector2(0, -22)
+color = Color(1, 0.54902, 0.243137, 1)
 shadow_enabled = true
+shadow_filter_smooth = 3.9
 texture = SubResource("GradientTexture2D_awx1s")
 texture_scale = 35.0
 

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq81g8d2ygyw1"]
+[gd_scene load_steps=3 format=3 uid="uid://dq81g8d2ygyw1"]
 
 [ext_resource type="Script" path="res://scenes/attractor/attraction_field.gd" id="1_gpg6l"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h2ssg"]
 
 [node name="AttractionField" type="Area2D"]
 process_mode = 1
@@ -11,7 +13,6 @@ gravity_space_override = 3
 gravity_point = true
 gravity_point_center = Vector2(0, 0)
 gravity_direction = Vector2(0, 0)
-gravity = 1500.0
 linear_damp_space_override = 4
 linear_damp = 3.0
 angular_damp_space_override = 4
@@ -20,6 +21,11 @@ script = ExtResource("1_gpg6l")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, 0, 192, 64, 240, 40, 256, 0, 240, -40, 192, -64)
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionPolygon2D"]
+position = Vector2(140, -3)
+scale = Vector2(227, 24)
+texture = SubResource("PlaceholderTexture2D_h2ssg")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
