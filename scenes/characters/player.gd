@@ -5,8 +5,8 @@ class_name Player
 # Enum for elemental resources
 enum Element { NONE, FIRE, WATER, EARTH, AIR }
 
-const BASE_SPEED := 200.0
-const JUMP_VELOCITY := -400.0
+const BASE_SPEED := 135.0
+const JUMP_VELOCITY := -325.0
 const SHARD_SPAWN_CHARGE = 0.5 # Shard spawns after 0.5 seconds of charging
 
 # Elemental resource variables
@@ -38,7 +38,7 @@ var shard : Shard
 var _charging := false # Is the player currently charging an attack?
 var _absorbing := false # Is the player currently absorbing resources?
 var _holding_shard := false # Is the player currently holding a shard (during an attack)?
-
+var _finished_jump_anim := true # Used to play jump animation as one-shot 
 @onready var hud : CanvasLayer = get_tree().get_first_node_in_group("hud")
 @onready var attack_timer : Timer = $AttackTimer
 @onready var shard_pin : PinJoint2D = $Smoothing2D/Hand/ShardPosition/ShardHolderPin
@@ -171,13 +171,11 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+		
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * speed
@@ -188,16 +186,26 @@ func _physics_process(delta):
 	set_animation()
 
 func set_animation():
-	
 	$Smoothing2D/AnimatedSprite2D.play()
+	# Check for jump first, playing it as a one-shot animation
+	if Input.is_action_just_pressed("jump"):
+		_finished_jump_anim = false
+		$Smoothing2D/AnimatedSprite2D.animation = "jump"
 	if velocity.x != 0:
 		$Smoothing2D/AnimatedSprite2D.flip_h = velocity.x < 0
 	if is_on_floor():
 		if velocity.x != 0:
-			$Smoothing2D/AnimatedSprite2D.animation = "run"
+			$Smoothing2D/AnimatedSprite2D.animation = "walk"
 			$Smoothing2D/AnimatedSprite2D.flip_v = false
 		else: $Smoothing2D/AnimatedSprite2D.animation = "idle"
 	elif velocity.y < 0:
-		$Smoothing2D/AnimatedSprite2D.animation = "liftoff"
+		if _finished_jump_anim:
+			$Smoothing2D/AnimatedSprite2D.animation = "rise"
 	else: 
-		$Smoothing2D/AnimatedSprite2D.animation = "float" 
+		$Smoothing2D/AnimatedSprite2D.animation = "fall" 
+
+
+
+func _on_animated_sprite_2d_animation_looped():
+	print(_finished_jump_anim)
+	_finished_jump_anim = true
