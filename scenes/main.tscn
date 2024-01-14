@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://chou65rvsxufh"]
 
-[ext_resource type="PackedScene" uid="uid://rkcu6rkqc1np" path="res://scenes/characters/player.tscn" id="1_y74sh"]
+[ext_resource type="PackedScene" uid="uid://rkcu6rkqc1np" path="res://scenes/characters/player/player.tscn" id="1_y74sh"]
 [ext_resource type="PackedScene" uid="uid://by7oy6krjx4e2" path="res://scenes/levels/dungeon.tscn" id="1_yuudh"]
 [ext_resource type="PackedScene" uid="uid://doatuupeb43qu" path="res://scenes/ui/hud.tscn" id="4_05p23"]
 

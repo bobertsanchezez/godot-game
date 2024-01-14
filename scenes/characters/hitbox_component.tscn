@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://by3mf57x47myt"]
+
+[sub_resource type="GDScript" id="GDScript_l16k0"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="HitboxComponent" type="Area2D"]
+script = SubResource("GDScript_l16k0")

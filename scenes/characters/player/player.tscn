@@ -1,11 +1,14 @@
-[gd_scene load_steps=61 format=3 uid="uid://rkcu6rkqc1np"]
+[gd_scene load_steps=64 format=3 uid="uid://rkcu6rkqc1np"]
 
-[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_l0660"]
+[ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_l0660"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="2_jdfx5"]
 [ext_resource type="PackedScene" uid="uid://4735ce8v1nmj" path="res://scenes/shards/shard.tscn" id="2_qvksl"]
 [ext_resource type="PackedScene" uid="uid://dq81g8d2ygyw1" path="res://scenes/attractor/attraction_field.tscn" id="4_6a4nm"]
 [ext_resource type="Texture2D" uid="uid://brmbpm3uf256u" path="res://assets/image/player/wizard-spritesheet.png" id="4_hae0p"]
-[ext_resource type="Shader" path="res://scenes/characters/player.gdshader" id="4_xlbtt"]
+[ext_resource type="Shader" path="res://scenes/characters/player/player.gdshader" id="4_xlbtt"]
+[ext_resource type="PackedScene" uid="uid://by3mf57x47myt" path="res://scenes/characters/hitbox_component.tscn" id="7_scm71"]
+[ext_resource type="PackedScene" uid="uid://wes2s2ggkfrk" path="res://scenes/characters/health_component.tscn" id="8_g4ygj"]
+[ext_resource type="Script" path="res://scripts/HitboxComponent.gd" id="8_svdx3"]
 
 [sub_resource type="Gradient" id="Gradient_4vlxg"]
 offsets = PackedFloat32Array(0, 0.883234, 1)
@@ -453,5 +456,14 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Shards" type="Node" parent="."]
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("7_scm71")]
+script = ExtResource("8_svdx3")
+HealthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitboxComponent"]
+polygon = PackedVector2Array(-6, -18, 6, -18, 13, 24, -11, 24)
+
+[node name="HealthComponent" parent="." instance=ExtResource("8_g4ygj")]
 
 [connection signal="animation_looped" from="Smoothing2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]

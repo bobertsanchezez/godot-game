@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://by7oy6krjx4e2"]
+[gd_scene load_steps=10 format=3 uid="uid://by7oy6krjx4e2"]
 
 [ext_resource type="Texture2D" uid="uid://cq8s8ajk75jo1" path="res://assets/image/tilemap.png" id="1_8n3e8"]
 [ext_resource type="PackedScene" uid="uid://chl8ool67pqs0" path="res://scenes/levels/decor/torch.tscn" id="2_x7dmy"]
+[ext_resource type="PackedScene" uid="uid://bkd36vn4bp1if" path="res://scenes/characters/tree/tree.tscn" id="3_haus3"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_rjh4k"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -683,3 +684,6 @@ color = Color(0.580392, 0.580392, 0.580392, 1)
 show_behind_parent = true
 occluder = SubResource("OccluderPolygon2D_57ckf")
 occluder_light_mask = 0
+
+[node name="Tree" parent="." instance=ExtResource("3_haus3")]
+position = Vector2(264, 572)

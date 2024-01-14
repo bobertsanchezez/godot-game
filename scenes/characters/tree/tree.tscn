@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkd36vn4bp1if"]
+
+[ext_resource type="Script" path="res://scripts/HealthComponent.gd" id="1_ugm6c"]
+[ext_resource type="Script" path="res://scripts/HitboxComponent.gd" id="2_33jy7"]
+[ext_resource type="Texture2D" uid="uid://b3ukxkd1r67fu" path="res://assets/image/sword.png" id="3_k8vhd"]
+
+[node name="Tree" type="Node2D"]
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("1_ugm6c")
+MAX_HEALTH = 30.0
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("HealthComponent")]
+script = ExtResource("2_33jy7")
+HealthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitboxComponent"]
+polygon = PackedVector2Array(8, -30, 8, 30, -7, 31, -7, -30)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_k8vhd")
