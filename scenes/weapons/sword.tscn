@@ -1,0 +1,229 @@
+[gd_scene load_steps=32 format=3 uid="uid://dfpbv7oekjnpx"]
+
+[ext_resource type="Texture2D" uid="uid://baa7sonblaa7u" path="res://assets/image/weapons/wizard-sword-spritesheet.png" id="1_2mbgd"]
+[ext_resource type="Shader" path="res://scenes/characters/player/player.gdshader" id="1_t8kqq"]
+[ext_resource type="Script" path="res://scenes/weapons/sword.gd" id="2_clnip"]
+
+[sub_resource type="Gradient" id="Gradient_4vlxg"]
+offsets = PackedFloat32Array(0, 0.862595, 1)
+colors = PackedColorArray(0.840273, 0.131442, 0, 1, 1, 0.607843, 0, 1, 6, 3, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p58ah"]
+seed = 105
+frequency = 0.0745
+fractal_octaves = 1
+domain_warp_enabled = true
+domain_warp_frequency = 0.025
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8i1ao"]
+generate_mipmaps = false
+seamless = true
+color_ramp = SubResource("Gradient_4vlxg")
+noise = SubResource("FastNoiseLite_p58ah")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dvuww"]
+shader = ExtResource("1_t8kqq")
+shader_parameter/fireColor = Color(1, 0.501961, 0, 1)
+shader_parameter/fireScroll = Vector2(0, 0)
+shader_parameter/fireBrightness = 1.0
+shader_parameter/element = 1
+shader_parameter/fireNoise = SubResource("NoiseTexture2D_8i1ao")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy32g"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(0, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peqcy"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(128, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8sao"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(256, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldqs5"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(384, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_me7nb"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(0, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvpui"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(128, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_an38j"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(256, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6ehp"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(384, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1yg8"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(512, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdyak"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(0, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sroa3"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(128, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii5ax"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(256, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75lms"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(384, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6aoal"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(512, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jovh"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(640, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfyxa"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(0, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07obr"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(128, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qj1xd"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(256, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikfms"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(384, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p73nt"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(512, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyi2i"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(640, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3icpr"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(768, 288, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkngu"]
+atlas = ExtResource("1_2mbgd")
+region = Rect2(896, 288, 128, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lewya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy32g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_peqcy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8sao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldqs5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me7nb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvpui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_an38j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6ehp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1yg8")
+}],
+"loop": true,
+"name": &"swing_1",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdyak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sroa3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ii5ax")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75lms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6aoal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jovh")
+}],
+"loop": true,
+"name": &"swing_2",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfyxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07obr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qj1xd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikfms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p73nt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyi2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3icpr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkngu")
+}],
+"loop": true,
+"name": &"swing_3",
+"speed": 10.0
+}]
+
+[node name="Sword" type="AnimatedSprite2D"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_dvuww")
+sprite_frames = SubResource("SpriteFrames_lewya")
+animation = &"idle"
+offset = Vector2(48, -10)
+script = ExtResource("2_clnip")
+
+[node name="Hitboxes" type="Node2D" parent="."]
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

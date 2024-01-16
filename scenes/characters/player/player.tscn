@@ -1,4 +1,5 @@
 [gd_scene load_steps=64 format=3 uid="uid://rkcu6rkqc1np"]
+[gd_scene load_steps=65 format=3 uid="uid://dt8a2kv68wi4x"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_l0660"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="2_jdfx5"]
@@ -6,13 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://dq81g8d2ygyw1" path="res://scenes/attractor/attraction_field.tscn" id="4_6a4nm"]
 [ext_resource type="Texture2D" uid="uid://brmbpm3uf256u" path="res://assets/image/player/wizard-spritesheet.png" id="4_hae0p"]
 [ext_resource type="Shader" path="res://scenes/characters/player/player.gdshader" id="4_xlbtt"]
+[ext_resource type="PackedScene" uid="uid://dfpbv7oekjnpx" path="res://scenes/weapons/sword.tscn" id="7_bfyp8"]
 [ext_resource type="PackedScene" uid="uid://by3mf57x47myt" path="res://scenes/characters/hitbox_component.tscn" id="7_scm71"]
 [ext_resource type="PackedScene" uid="uid://wes2s2ggkfrk" path="res://scenes/characters/health_component.tscn" id="8_g4ygj"]
 [ext_resource type="Script" path="res://scripts/HitboxComponent.gd" id="8_svdx3"]
 
 [sub_resource type="Gradient" id="Gradient_4vlxg"]
-offsets = PackedFloat32Array(0, 0.883234, 1)
 colors = PackedColorArray(0.840273, 0.131442, 0, 1, 1, 0.607843, 0, 1, 0, 0.329412, 0.984314, 1)
+offsets = PackedFloat32Array(0, 0.862595, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_p58ah"]
 seed = 105
@@ -22,6 +24,7 @@ domain_warp_enabled = true
 domain_warp_frequency = 0.025
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8i1ao"]
+generate_mipmaps = false
 seamless = true
 color_ramp = SubResource("Gradient_4vlxg")
 noise = SubResource("FastNoiseLite_p58ah")
@@ -416,6 +419,7 @@ sprite_frames = SubResource("SpriteFrames_whrgy")
 animation = &"jump"
 
 [node name="Hand" type="Sprite2D" parent="Smoothing2D"]
+visible = false
 texture = SubResource("GradientTexture2D_wfbyd")
 offset = Vector2(12, 0)
 
@@ -451,11 +455,9 @@ drag_right_margin = 0.1
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
+[node name="Weapon" type="Node2D" parent="Smoothing2D"]
 
-[node name="Shards" type="Node" parent="."]
+[node name="Sword" parent="Smoothing2D/Weapon" instance=ExtResource("7_bfyp8")]
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("7_scm71")]
 script = ExtResource("8_svdx3")

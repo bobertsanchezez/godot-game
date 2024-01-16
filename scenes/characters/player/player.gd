@@ -40,7 +40,6 @@ var _absorbing := false # Is the player currently absorbing resources?
 var _holding_shard := false # Is the player currently holding a shard (during an attack)?
 var _finished_jump_anim := true # Used to play jump animation as one-shot 
 @onready var hud : CanvasLayer = get_tree().get_first_node_in_group("hud")
-@onready var attack_timer : Timer = $AttackTimer
 @onready var shard_pin : PinJoint2D = $Smoothing2D/Hand/ShardPosition/ShardHolderPin
 @onready var attractor_field : AttractorField = $Smoothing2D/Hand/AttractionField
 
@@ -53,12 +52,12 @@ func _process(delta):
 	_attack_on_input()
 	_absorb_on_input()
 	_rotate_hand_towards_mouse(delta)
+
 #region User input actions.
 func _rotate_hand_towards_mouse(delta : float):
 	var hand : Sprite2D = $Smoothing2D/Hand
 	if _charging or _absorbing:
 		hand.visible = true
-
 	else:
 		# hide hand
 		hand.visible = false
@@ -69,29 +68,11 @@ func _rotate_hand_towards_mouse(delta : float):
 	hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
 
 func _attack_on_input():
-	# Set attack timer and booleans_
-	# Time elapsed on attack timer (0 if stopped)
-	var time_elapsed = fmod(attack_timer.wait_time - attack_timer.time_left, attack_timer.wait_time)
 	if Input.is_action_just_pressed("attack"):
-		attack_timer.start()
-		_charging = true
-	elif Input.is_action_just_released("attack"): 
-		attack_timer.stop()
-		if shard: shard.on_release(time_elapsed)
-		shard = null
-		shard_pin.node_a = ""
-		_charging = false
-		_holding_shard = false
-	elif Input.is_action_just_pressed("absorb") and _charging:
-		attack_timer.stop()
-		if shard: shard.on_cancel()
-		shard_pin.node_a = ""
-		shard = null
-		_charging = false
-		_holding_shard = false
-	if not _holding_shard and _charging and time_elapsed >= SHARD_SPAWN_CHARGE:
-		_spawn_shard() 
-		_holding_shard = true
+		# Tell current weapon to attack 
+		if $Smoothing2D/Weapon.get_child_count() > 0:
+			var weapon = $Smoothing2D/Weapon.get_child(0)
+			weapon.attack(active_element)
 
 func _absorb_on_input():
 	if Input.is_action_just_pressed("absorb"):
@@ -102,18 +83,6 @@ func _absorb_on_input():
 		_absorbing = false
 		#attractor_field.gravity_space_override = Area2D.SPACE_OVERRIDE_DISABLED
 		attractor_field.disable_collision()
-		
-
-func _spawn_shard():
-	var new_shard : Shard = shard_scene.instantiate()
-	new_shard.setup(active_element)
-	$Shards.add_child(new_shard) # Transform becomes global here (child of Node)
-	new_shard.position = $Smoothing2D/Hand/ShardPosition.global_position 
-	new_shard.rotation = $Smoothing2D/Hand/ShardPosition.global_rotation
-	self.shard = new_shard 
-	#await get_tree().create_timer(0.05).timeout
-	if shard: 
-		shard_pin.node_a = new_shard.get_path()
 
 func _cycle_active_element_on_input():
 	if Input.is_action_just_pressed("cycle_element_once"):
