@@ -55,17 +55,26 @@ func _process(delta):
 
 #region User input actions.
 func _rotate_hand_towards_mouse(delta : float):
-	var hand : Sprite2D = $Smoothing2D/Hand
+	var hand = $Smoothing2D/Weapon.get_child(0)
 	if _charging or _absorbing:
 		hand.visible = true
 	else:
 		# hide hand
-		hand.visible = false
+		#test, revert later
+		hand.visible = true
 		pass
 	var rotation_weight := 5.0 if _charging else 10.0
 	var rotation_offset := PI / 2 if _charging else 0.0
 	var target_angle = hand.global_position.angle_to_point(get_global_mouse_position()) + rotation_offset
 	hand.rotation = lerp_angle(hand.rotation, target_angle, rotation_weight * delta)
+	if(abs(fmod(hand.rotation,2*PI))>1.5*PI) or (abs(fmod(hand.rotation,2*PI))<0.5*PI):
+		hand.flip_v = 0
+		hand.offset.y = -10
+	else:
+		hand.flip_v = 1
+		hand.offset.y = 10
+		#print("upsidedown")
+	#print(abs(fmod(hand.rotation,2*PI)))
 
 func _attack_on_input():
 	if Input.is_action_just_pressed("attack"):
@@ -73,6 +82,7 @@ func _attack_on_input():
 		if $Smoothing2D/Weapon.get_child_count() > 0:
 			var weapon = $Smoothing2D/Weapon.get_child(0)
 			weapon.attack(active_element)
+			
 
 func _absorb_on_input():
 	if Input.is_action_just_pressed("absorb"):
@@ -176,5 +186,5 @@ func set_animation():
 
 
 func _on_animated_sprite_2d_animation_looped():
-	print(_finished_jump_anim)
+	#print(_finished_jump_anim)
 	_finished_jump_anim = true

@@ -457,6 +457,10 @@ editor_draw_drag_margin = true
 [node name="Weapon" type="Node2D" parent="Smoothing2D"]
 
 [node name="Sword" parent="Smoothing2D/Weapon" instance=ExtResource("7_bfyp8")]
+position = Vector2(0.125, 0)
+scale = Vector2(1.00781, 1)
+animation = &"swing_3"
+frame_progress = 0.961237
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("7_scm71")]
 script = ExtResource("8_svdx3")

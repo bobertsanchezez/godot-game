@@ -5,6 +5,7 @@ var attack_damage := 10.0
 var knockback_force := 100.0
 
 func _on_hitbox_area_entered(area):
+	print("attack function called")
 	if area is HitboxComponent:
 		var hitbox: HitboxComponent = area
 		

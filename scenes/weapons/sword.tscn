@@ -217,7 +217,7 @@ animations = [{
 texture_repeat = 2
 material = SubResource("ShaderMaterial_dvuww")
 sprite_frames = SubResource("SpriteFrames_lewya")
-animation = &"idle"
+animation = &"swing_1"
 offset = Vector2(48, -10)
 script = ExtResource("2_clnip")
 
