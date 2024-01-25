@@ -13,4 +13,3 @@ metadata/_edit_lock_ = true
 position = Vector2(573, 622)
 
 [node name="HUD" parent="." instance=ExtResource("4_05p23")]
-visible = false

@@ -118,6 +118,7 @@ func _drain_resources(delta : float):
 func _cycle_active_element(cycle_amount : int):
 	active_element += cycle_amount
 	active_element %= Element.AIR + 1 # Final element 
+	_update_hud()
 
 # Function to update elemental resources
 func update_elemental_resource(element: Element, amount: float):
@@ -145,6 +146,8 @@ func _update_hud():
 				if progressBar:
 					progressBar.value = elemental_resources[element]
 					progressBar.max_value = elemental_resource_maxes[element]
+					if element == active_element: progressBar.visible = true 
+					else: progressBar.visible = false
 
 func _physics_process(delta):
 	# Add the gravity.

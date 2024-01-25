@@ -1,84 +1,66 @@
-[gd_scene load_steps=11 format=3 uid="uid://doatuupeb43qu"]
+[gd_scene load_steps=7 format=3 uid="uid://doatuupeb43qu"]
 
-[sub_resource type="Gradient" id="Gradient_85wm1"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_elll5"]
-gradient = SubResource("Gradient_85wm1")
-height = 16
-
-[sub_resource type="Gradient" id="Gradient_t3cdy"]
-offsets = PackedFloat32Array(0, 0.602273, 1)
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 0.858824, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_u8iok"]
-gradient = SubResource("Gradient_t3cdy")
-height = 16
-
-[sub_resource type="Gradient" id="Gradient_771oc"]
-offsets = PackedFloat32Array(0, 0.75, 1)
-colors = PackedColorArray(0, 0.227451, 1, 1, 0, 0.227451, 1, 1, 0.278431, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ob3l7"]
-gradient = SubResource("Gradient_771oc")
-height = 16
-
-[sub_resource type="Gradient" id="Gradient_g57uk"]
-offsets = PackedFloat32Array(0, 0.715909, 1)
-colors = PackedColorArray(0.454902, 0.227451, 0, 1, 0.454902, 0.227451, 0, 1, 0, 0.705863, 2.11775e-06, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0kt8c"]
-gradient = SubResource("Gradient_g57uk")
-height = 16
-
-[sub_resource type="Gradient" id="Gradient_wk1xl"]
-offsets = PackedFloat32Array(0, 0.511364, 1)
-colors = PackedColorArray(7.12335e-06, 0.990746, 0.994391, 1, 7.12335e-06, 0.990746, 0.994391, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_y17eu"]
-gradient = SubResource("Gradient_wk1xl")
-height = 16
+[ext_resource type="Texture2D" uid="uid://d07stsbfc3ruv" path="res://assets/image/hud/resource-bar-under.png" id="1_pocde"]
+[ext_resource type="Texture2D" uid="uid://dlrgd04fx8qdm" path="res://assets/image/hud/resource-bar-over.png" id="2_hdgnh"]
+[ext_resource type="Texture2D" uid="uid://ju8ftcuv44v7" path="res://assets/image/hud/resource-bar-fire.png" id="3_l8uil"]
+[ext_resource type="Texture2D" uid="uid://cgarlwao2k0sl" path="res://assets/image/hud/resource-bar-water.png" id="4_1h3bk"]
+[ext_resource type="Texture2D" uid="uid://deymtcj1jehjp" path="res://assets/image/hud/resource-bar-earth.png" id="5_hmd3w"]
+[ext_resource type="Texture2D" uid="uid://dsrx1e45vc45e" path="res://assets/image/hud/resource-bar-air.png" id="6_kn4nf"]
 
 [node name="HUD" type="CanvasLayer" groups=["hud"]]
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="ResourceBars" type="VBoxContainer" parent="."]
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.099
 anchor_right = 0.5
-offset_left = -32.0
-offset_top = 22.0
-offset_right = 32.0
-offset_bottom = 86.0
+anchor_bottom = 0.099
+offset_left = -64.0
+offset_top = -15.528
+offset_right = 64.0
+offset_bottom = 16.472
 grow_horizontal = 2
-size_flags_vertical = 4
+scale = Vector2(2.5, 2.5)
+pivot_offset = Vector2(64, 16)
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_constants/separation = 0
-metadata/_edit_use_anchors_ = true
+alignment = 1
+metadata/_edit_group_ = true
 
 [node name="FireResourceBar" type="TextureProgressBar" parent="ResourceBars"]
 layout_mode = 2
-value = 100.0
-texture_under = SubResource("GradientTexture2D_elll5")
-texture_progress = SubResource("GradientTexture2D_u8iok")
+step = 0.781
+value = 99.968
+texture_under = ExtResource("1_pocde")
+texture_over = ExtResource("2_hdgnh")
+texture_progress = ExtResource("3_l8uil")
 
 [node name="WaterResourceBar" type="TextureProgressBar" parent="ResourceBars"]
+visible = false
 layout_mode = 2
+step = 0.781
 value = 100.0
-texture_under = SubResource("GradientTexture2D_elll5")
-texture_progress = SubResource("GradientTexture2D_ob3l7")
+texture_under = ExtResource("1_pocde")
+texture_over = ExtResource("2_hdgnh")
+texture_progress = ExtResource("4_1h3bk")
 
 [node name="EarthResourceBar" type="TextureProgressBar" parent="ResourceBars"]
+visible = false
 layout_mode = 2
+step = 0.781
 value = 100.0
-texture_under = SubResource("GradientTexture2D_elll5")
-texture_progress = SubResource("GradientTexture2D_0kt8c")
+texture_under = ExtResource("1_pocde")
+texture_over = ExtResource("2_hdgnh")
+texture_progress = ExtResource("5_hmd3w")
 
 [node name="AirResourceBar" type="TextureProgressBar" parent="ResourceBars"]
+visible = false
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+step = 0.781
 value = 100.0
-texture_under = SubResource("GradientTexture2D_elll5")
-texture_progress = SubResource("GradientTexture2D_y17eu")
+texture_under = ExtResource("1_pocde")
+texture_over = ExtResource("2_hdgnh")
+texture_progress = ExtResource("6_kn4nf")
