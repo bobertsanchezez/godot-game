@@ -30,10 +30,10 @@ noise = SubResource("FastNoiseLite_p58ah")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dvuww"]
 shader = ExtResource("4_xlbtt")
-shader_parameter/fireColor = Color(1, 0.501961, 0, 1)
 shader_parameter/fireScroll = Vector2(0, 0)
-shader_parameter/fireBrightness = 1.0
+shader_parameter/fireScrollSpeed = 1.0
 shader_parameter/element = 1
+shader_parameter/amount = 400
 shader_parameter/fireNoise = SubResource("NoiseTexture2D_8i1ao")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3oh5"]
@@ -448,7 +448,7 @@ limit_right = 1200
 limit_bottom = 672
 limit_smoothed = true
 position_smoothing_enabled = true
-position_smoothing_speed = 6.0
+position_smoothing_speed = 15.0
 drag_left_margin = 0.1
 drag_right_margin = 0.1
 editor_draw_limits = true
@@ -459,7 +459,6 @@ editor_draw_drag_margin = true
 [node name="Sword" parent="Smoothing2D/Weapon" instance=ExtResource("7_bfyp8")]
 position = Vector2(0.125, 0)
 scale = Vector2(1.00781, 1)
-animation = &"swing_3"
 frame_progress = 0.961237
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("7_scm71")]

@@ -5,29 +5,32 @@
 [ext_resource type="Script" path="res://scenes/weapons/sword.gd" id="2_clnip"]
 
 [sub_resource type="Gradient" id="Gradient_4vlxg"]
-offsets = PackedFloat32Array(0, 0.862595, 1)
-colors = PackedColorArray(0.840273, 0.131442, 0, 1, 1, 0.607843, 0, 1, 6, 3, 0, 1)
+offsets = PackedFloat32Array(0, 0.0714286, 0.980106, 1)
+colors = PackedColorArray(0.448827, 0.049923, 0, 1, 0.840273, 0.131442, 0, 1, 1, 0.607843, 0, 1, 1, 1, 0, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_p58ah"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fhlpf"]
+noise_type = 0
 seed = 105
-frequency = 0.0745
+frequency = 0.3355
 fractal_octaves = 1
 domain_warp_enabled = true
 domain_warp_frequency = 0.025
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8i1ao"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wvnqi"]
+width = 280
+height = 70
 generate_mipmaps = false
 seamless = true
 color_ramp = SubResource("Gradient_4vlxg")
-noise = SubResource("FastNoiseLite_p58ah")
+noise = SubResource("FastNoiseLite_fhlpf")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dvuww"]
 shader = ExtResource("1_t8kqq")
-shader_parameter/fireColor = Color(1, 0.501961, 0, 1)
-shader_parameter/fireScroll = Vector2(0, 0)
-shader_parameter/fireBrightness = 1.0
+shader_parameter/fireScroll = Vector2(0, 1)
+shader_parameter/fireScrollSpeed = 0.1
 shader_parameter/element = 1
-shader_parameter/fireNoise = SubResource("NoiseTexture2D_8i1ao")
+shader_parameter/amount = 400
+shader_parameter/fireNoise = SubResource("NoiseTexture2D_wvnqi")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vy32g"]
 atlas = ExtResource("1_2mbgd")
@@ -214,10 +217,11 @@ animations = [{
 }]
 
 [node name="Sword" type="AnimatedSprite2D"]
-texture_repeat = 2
+texture_repeat = 3
 material = SubResource("ShaderMaterial_dvuww")
 sprite_frames = SubResource("SpriteFrames_lewya")
-animation = &"swing_1"
+animation = &"swing_2"
+frame_progress = 0.405375
 offset = Vector2(48, -10)
 script = ExtResource("2_clnip")
 
@@ -225,5 +229,9 @@ script = ExtResource("2_clnip")
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="FireNoise" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("NoiseTexture2D_wvnqi")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
