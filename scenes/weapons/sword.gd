@@ -32,20 +32,20 @@ func _process(delta):
 	_update_state()
 	_select_animation()
 	_select_hitbox()
-	print($AttackTimer.time_left)
 
 # Updates state
 func _update_state():
-	match _state: 
-		State.SWING_1: 
-			if frame == _swing_1_end: 
-				_pause_attack()
-		State.SWING_2:
-			if frame == _swing_2_end:
-				_pause_attack()
-		State.SWING_3:
-			if frame == _swing_3_end:
-				_pause_attack()
+	if not _finished_animation:
+		match _state: 
+			State.SWING_1: 
+				if frame == _swing_1_end: 
+					_pause_attack()
+			State.SWING_2:
+				if frame == _swing_2_end:
+					_pause_attack()
+			State.SWING_3:
+				if frame == _swing_3_end:
+					_pause_attack()
 	if _finished_animation and _should_transition_state:
 		# Go to next swing. If on final swing, do first swing again
 		_state += 1 if _state != State.SWING_3 else 2 
@@ -62,7 +62,7 @@ func _pause_attack():
 	pause()
 	_finished_animation = true
 	# start timer, after which attack pose resets to idle
-	$AttackTimer.start(1)
+	$AttackTimer.start(0.25)
 
 # Sets animation based on state.
 func _select_animation():

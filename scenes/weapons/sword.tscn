@@ -221,7 +221,7 @@ texture_repeat = 3
 material = SubResource("ShaderMaterial_dvuww")
 sprite_frames = SubResource("SpriteFrames_lewya")
 animation = &"swing_2"
-frame_progress = 0.405375
+frame_progress = 0.915219
 offset = Vector2(48, -10)
 script = ExtResource("2_clnip")
 
