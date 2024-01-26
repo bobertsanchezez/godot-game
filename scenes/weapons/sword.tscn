@@ -1,14 +1,15 @@
-[gd_scene load_steps=32 format=3 uid="uid://dfpbv7oekjnpx"]
+[gd_scene load_steps=37 format=3 uid="uid://dfpbv7oekjnpx"]
 
 [ext_resource type="Texture2D" uid="uid://baa7sonblaa7u" path="res://assets/image/weapons/wizard-sword-spritesheet.png" id="1_2mbgd"]
 [ext_resource type="Shader" path="res://scenes/characters/player/player.gdshader" id="1_t8kqq"]
 [ext_resource type="Script" path="res://scenes/weapons/sword.gd" id="2_clnip"]
+[ext_resource type="Texture2D" uid="uid://cisnvnu0fgb45" path="res://icon.svg" id="4_s31fl"]
 
 [sub_resource type="Gradient" id="Gradient_4vlxg"]
 offsets = PackedFloat32Array(0, 0.0714286, 0.980106, 1)
 colors = PackedColorArray(0.448827, 0.049923, 0, 1, 0.840273, 0.131442, 0, 1, 1, 0.607843, 0, 1, 1, 1, 0, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fhlpf"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rj5l4"]
 noise_type = 0
 seed = 105
 frequency = 0.3355
@@ -22,15 +23,50 @@ height = 70
 generate_mipmaps = false
 seamless = true
 color_ramp = SubResource("Gradient_4vlxg")
-noise = SubResource("FastNoiseLite_fhlpf")
+noise = SubResource("FastNoiseLite_rj5l4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wyfh0"]
+noise_type = 0
+seed = 105
+frequency = 0.029
+fractal_octaves = 1
+domain_warp_enabled = true
+domain_warp_frequency = 0.025
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mra8s"]
+width = 280
+height = 70
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_wyfh0")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_llek4"]
+noise_type = 0
+frequency = 0.0235
+fractal_octaves = 3
+fractal_lacunarity = 2.685
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_48lec"]
+width = 240
+height = 70
+seamless = true
+noise = SubResource("FastNoiseLite_llek4")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dvuww"]
 shader = ExtResource("1_t8kqq")
 shader_parameter/fireScroll = Vector2(0, 1)
 shader_parameter/fireScrollSpeed = 0.1
-shader_parameter/element = 1
-shader_parameter/amount = 400
+shader_parameter/waterColor = Color(0.8, 0.8, 1.2, 1)
+shader_parameter/waterScroll = Vector2(0, 1)
+shader_parameter/waterScroll2 = Vector2(0, -1)
+shader_parameter/waterScrollSpeed = 0.05
+shader_parameter/distortionStrength = -0.198
+shader_parameter/element = 2
+shader_parameter/firePixels = 400
+shader_parameter/waterPixels = 45
 shader_parameter/fireNoise = SubResource("NoiseTexture2D_wvnqi")
+shader_parameter/waterNoise = SubResource("NoiseTexture2D_mra8s")
+shader_parameter/waterNoise2 = SubResource("NoiseTexture2D_48lec")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vy32g"]
 atlas = ExtResource("1_2mbgd")
@@ -221,7 +257,7 @@ texture_repeat = 3
 material = SubResource("ShaderMaterial_dvuww")
 sprite_frames = SubResource("SpriteFrames_lewya")
 animation = &"swing_2"
-frame_progress = 0.915219
+frame_progress = 0.434182
 offset = Vector2(48, -10)
 script = ExtResource("2_clnip")
 
@@ -230,8 +266,9 @@ script = ExtResource("2_clnip")
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="FireNoise" type="Sprite2D" parent="."]
-visible = false
-texture = SubResource("NoiseTexture2D_wvnqi")
+[node name="Icon" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(44, -20)
+texture = ExtResource("4_s31fl")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

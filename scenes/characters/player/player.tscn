@@ -32,8 +32,14 @@ noise = SubResource("FastNoiseLite_p58ah")
 shader = ExtResource("4_xlbtt")
 shader_parameter/fireScroll = Vector2(0, 0)
 shader_parameter/fireScrollSpeed = 1.0
+shader_parameter/waterColor = null
+shader_parameter/waterScroll = Vector2(0, 1)
+shader_parameter/waterScroll2 = Vector2(0, 1)
+shader_parameter/waterScrollSpeed = 0.1
+shader_parameter/distortionStrength = 0.2
 shader_parameter/element = 1
-shader_parameter/amount = 400
+shader_parameter/firePixels = 400
+shader_parameter/waterPixels = 40
 shader_parameter/fireNoise = SubResource("NoiseTexture2D_8i1ao")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3oh5"]
