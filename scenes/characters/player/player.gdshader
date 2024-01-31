@@ -33,7 +33,7 @@ void fragment() {
 			vec4 noiseColor = texture(waterNoise, SCREEN_UV + (waterScroll * waterScrollSpeed * TIME));
 			vec4 noiseColor2 = texture(waterNoise2, SCREEN_UV + (waterScroll2 * waterScrollSpeed * TIME));
 			vec2 distortionUV = distortionStrength * (noiseColor.rr - noiseColor2.rr);
-			distortionUV = round(distortionUV * float(waterPixels)) / float(waterPixels);
+			//distortionUV = round(distortionUV * float(waterPixels)) / float(waterPixels);
 			finalColor = texture(SCREEN_TEXTURE, SCREEN_UV + distortionUV) * waterColor;
 			break;
 		case 3:
